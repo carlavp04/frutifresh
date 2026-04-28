@@ -38,11 +38,7 @@
 <body>
 
 <h1 class="titulo">🧾 Pedidos realizados</h1>
-@if(session('error'))
-    <div style="background-color:#f44336; color:white; padding:10px; text-align:center; margin:10px;">
-        {{ session('error') }}
-    </div>
-@endif
+
 
 <div class="text-center mb-3">
     <a href="/productos" class="btn btn-warning">← Volver a la tienda</a>
@@ -54,7 +50,7 @@
     <div class="pedido">
         <h4>Pedido #{{ $pedido->id }}</h4>
 
-        <!-- 🟠 ESTADO MEJORADO -->
+        <!-- ESTADO MEJORADO -->
         <div class="estado">
             @if($pedido->estado == 'pendiente')
                 <span class="badge bg-warning text-dark">⏳ Pendiente</span>
@@ -67,7 +63,7 @@
             @endif
         </div>
 
-        <!-- 🔥 BOTONES ADMIN -->
+        <!-- BOTONES ADMIN -->
        <div class="mb-2">
 
         @if($pedido->estado == 'pendiente')

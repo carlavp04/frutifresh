@@ -61,7 +61,7 @@ class ProductoController extends Controller
             'estado' => 'pendiente'
         ]);
 
-        // 🔥 EMAIL (básico)
+        // EMAIL //         
         try {
             Mail::raw('Tu pedido #' . $pedido->id . ' ha sido realizado correctamente 🍊', function ($message) {
                 $message->to('test@test.com')
