@@ -5,6 +5,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
@@ -43,49 +44,52 @@
 </head>
 <body>
 
+<!-- 🔥 NAVBAR ARREGLADO -->
 <nav class="navbar navbar-expand-lg navbar-light bg-warning">
   <div class="container">
     <a class="navbar-brand fw-bold" href="/productos">🍊 FrutiFresh</a>
 
-    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
-      ☰
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+      <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="menu">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="/productos">Tienda</a></li>
-        @auth
-            @if(Auth::user()->email == 'admin@admin.com')
-                <li class="nav-item"><a class="nav-link" href="/pedidos">Pedidos</a></li>
-            @else
-                <li class="nav-item"><span class="nav-link text-muted">Pedidos (solo admin)</span></li>
-            @endif
-        @endauth        
-        <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/productos">Tienda</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/pedidos">Pedidos (solo admin)</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#contacto">Contacto</a>
+        </li>
+
       </ul>
     </div>
   </div>
 </nav>
 
+<!-- HEADER -->
 <div class="text-center">
     <img src="https://images.unsplash.com/photo-1553530666-ba11a7da3888"
          style="width:100%; max-height:300px; object-fit:cover;">
 </div>
 
 <h1 class="titulo">🍊 FrutiFresh - Zumos</h1>
+
+<!-- MENSAJES -->
 @if(session('error'))
-    <div style="background-color:#f44336; color:white; padding:10px; text-align:center; margin:10px;">
+    <div id="mensaje-error" style="background-color:#f44336; color:white; padding:10px; text-align:center; margin:10px;">
         {{ session('error') }}
     </div>
 @endif
 
-@if(session('success'))
-    <div id="mensaje" style="background-color:#ff9800; color:white; padding:10px; text-align:center; margin:10px;">
-        {{ session('success') }}
-    </div>
-@endif
 
-<!-- 🟢 CARRITO ARREGLADO -->
+<!-- 🛒 CARRITO -->
 <div class="container mt-4">
 
 <h2 class="text-center mb-3">🛒 Tu carrito</h2>
@@ -123,6 +127,7 @@
 
 </div>
 
+<!-- PRODUCTOS -->
 <div class="container mt-4">
     <div class="row">
 
@@ -165,17 +170,28 @@
     </div>
 </div>
 
+<!-- FOOTER -->
 <footer id="contacto">
     <h5>Contacto</h5>
     <p>Email: frutifresh@gmail.com</p>
     <p>Teléfono: 123 456 789</p>
 </footer>
 
+<!-- SCRIPT -->
 <script>
     setTimeout(function() {
         let mensaje = document.getElementById('mensaje');
         if (mensaje) {
             mensaje.style.display = 'none';
+        }
+    }, 3000);
+</script>
+
+<script>
+    setTimeout(function() {
+        let mensajeError = document.getElementById('mensaje-error');
+        if (mensajeError) {
+            mensajeError.style.display = 'none';
         }
     }, 3000);
 </script>
