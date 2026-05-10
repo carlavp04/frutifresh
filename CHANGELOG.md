@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/laravel/compare/v1.0...main)
+## [Unreleased](https://github.com/laravel/laravel/compare/v2.0...main)
+
+## [v2.0](https://github.com/laravel/laravel/compare/v1.0...v2.0) - 2026-05-10
+
+Segunda versión funcional de FrutiFresh con mejoras visuales, optimización responsive, corrección de errores y actualización de funcionalidades principales.
 
 ## [v1.0](https://github.com/laravel/laravel/compare/v12.12.1...v1.0) - 2026-04-28
 
