@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html>
 <head>
     <title>FrutiFresh 🍊</title>
@@ -44,7 +44,7 @@
 </head>
 <body>
 
-<!-- 🔥 NAVBAR ARREGLADO -->
+<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-light bg-warning">
   <div class="container">
     <a class="navbar-brand fw-bold" href="/productos">🍊 FrutiFresh</a>
@@ -57,16 +57,60 @@
       <ul class="navbar-nav ms-auto">
 
         <li class="nav-item">
-          <a class="nav-link" href="/productos">Tienda</a>
+          <a class="nav-link" href="/productos">{{ __('messages.store') }}</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="/pedidos">Pedidos (solo admin)</a>
+            <a class="nav-link" href="/lang/es">ES</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="#contacto">Contacto</a>
+            <a class="nav-link" href="/lang/en">EN</a>
         </li>
+
+        @if(auth()->check() && auth()->user()->email == 'admin@admin.com')
+
+            <li class="nav-item">
+                <a class="nav-link" href="/pedidos">
+                    {{ __('messages.orders') }}
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/categorias">
+                    {{ __('messages.categories') }}
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/favoritos">
+                    ⭐ {{ __('messages.favs') }}
+                </a>
+            </li>
+
+        @endif
+
+        @if(auth()->check() && auth()->user()->email != 'admin@admin.com')
+
+            <li class="nav-item">
+                <a class="nav-link" href="/mis-pedidos">
+                    Mis pedidos
+                </a>
+            </li>
+
+        @endif
+
+
+            <li class="nav-item">
+                <a class="nav-link" href="/mi-perfil">
+                    {{ __('messages.perfil') }}
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#contacto">
+                    {{ __('messages.contact') }}</a>
+            </li>
 
       </ul>
     </div>
@@ -79,7 +123,52 @@
          style="width:100%; max-height:300px; object-fit:cover;">
 </div>
 
-<h1 class="titulo">🍊 FrutiFresh - Zumos</h1>
+<h1 class="titulo">🍊 {{ __('messages.title') }}</h1>
+
+
+<!-- FILTRO CATEGORÍAS -->
+<div class="text-center mb-4">
+
+    <a href="/productos"
+       class="btn {{ $categoriaActual == null ? 'btn-dark' : 'btn-success' }} btn-sm">
+        {{ __('messages.all') }}
+    </a>
+
+    @foreach($categorias as $categoria)
+
+        <a href="/categoria/{{ $categoria->id }}"
+           class="btn {{ $categoriaActual == $categoria->id ? 'btn-dark' : 'btn-success' }} btn-sm">
+
+            @if($categoria->nombre == 'Frutas')
+                {{ __('messages.fruits') }}
+
+            @elseif($categoria->nombre == 'Detox')
+                {{ __('messages.detox') }}
+
+            @elseif($categoria->nombre == 'Tropical')
+                {{ __('messages.tropical') }}
+
+            @elseif($categoria->nombre == 'Smoothie')
+                {{ __('messages.smoothie') }}
+
+            @elseif($categoria->nombre == 'Saludable')
+                {{ __('messages.healthy') }}
+
+            @elseif($categoria->nombre == 'Energético')
+                {{ __('messages.energy') }}
+
+            @elseif($categoria->nombre == 'Vegetales')
+                {{ __('messages.vegetables') }}
+
+            @else
+                {{ $categoria->nombre }}
+            @endif
+
+        </a>
+
+    @endforeach
+
+</div>
 
 <!-- MENSAJES -->
 @if(session('error'))
@@ -88,11 +177,10 @@
     </div>
 @endif
 
-
-<!-- 🛒 CARRITO -->
+<!-- CARRITO -->
 <div class="container mt-4">
 
-<h2 class="text-center mb-3">🛒 Tu carrito</h2>
+<h2 class="text-center mb-3">🛒{{ __('messages.cart') }}</h2>
 
 @php
     $carrito = session('carrito', []);
@@ -117,12 +205,12 @@
 
     <div class="text-center mt-3">
         <a href="{{ url('/confirmar') }}" class="btn btn-success">
-            Confirmar pedido
+            {{ __('messages.confirm') }}
         </a>
     </div>
 
 @else
-    <p class="text-center text-muted">Tu carrito está vacío</p>
+    <p class="text-center text-muted">{{ __('messages.empty') }}</p>
 @endif
 
 </div>
@@ -137,10 +225,22 @@
 
                     @if(str_contains(strtolower($producto->nombre), 'naranja'))
                         <img src="https://libbys.es/wordpress/wp-content/uploads/2019/07/jugonaranja.jpg" class="card-img-top mb-2">
+
                     @elseif(str_contains(strtolower($producto->nombre), 'detox'))
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTo22VOuzJGnIk-k0n-x9pxzP2gZED3MGpC2A&s" class="card-img-top mb-2">
+
                     @elseif(str_contains(strtolower($producto->nombre), 'tropical'))
-                        <img src="https://www.chefplus.es/sites/default/files/styles/receta__650x345_/public/zumo_de_bayas-shutterstock_280127078.jpg?itok=XR9rBPM8" class="card-img-top mb-2">
+                        <img src="https://thumbs.dreamstime.com/b/c%C3%B3ctel-de-verano-con-zumo-pi%C3%B1a-vodka-mango-bebida-larga-o-cola-fr%C3%ADa-salpicaduras-congeladas-y-ca%C3%ADdas-voladoras-tropical-fondo-241835244.jpg?w=576" class="card-img-top mb-2">
+
+                    @elseif(str_contains(strtolower($producto->nombre), 'energético'))
+                        <img src="https://glamour-fresh.com/wp-content/uploads/2021/12/batido-mango-glamour-fresh.webp" class="card-img-top mb-2">
+
+                    @elseif(str_contains(strtolower($producto->nombre), 'smoothie'))
+                        <img src="https://okdiario.com/img/recetas/2017/07/04/smoothie-de-frutos-rojos.jpg" class="card-img-top mb-2">
+
+                    @elseif(str_contains(strtolower($producto->nombre), 'verde'))
+                        <img src="https://cdn7.kiwilimon.com/recetaimagen/20472/640x426/14858.jpg.webp" class="card-img-top mb-2">
+
                     @else
                         <img src="https://images.unsplash.com/photo-1497534446932-c925b458314e" class="card-img-top mb-2">
                     @endif
@@ -148,19 +248,87 @@
                     <h4>🍹 {{ $producto->nombre }}</h4>
 
                     @if(str_contains(strtolower($producto->nombre), 'naranja'))
-                        <p>🍊 Zumo natural recién exprimido, cargado de vitamina C para darte energía desde el primer sorbo.</p>
+                        <p>🍊 {{ __('messages.orange_desc') }}</p>
+
                     @elseif(str_contains(strtolower($producto->nombre), 'detox'))
-                        <p>🥬 Refrescante mezcla detox que limpia tu cuerpo y te hace sentir ligero y lleno de vida.</p>
+                        <p>🥬 {{ __('messages.detox_desc') }}</p>
+
                     @elseif(str_contains(strtolower($producto->nombre), 'tropical'))
-                        <p>🍍 Explosión de sabores tropicales que te transporta directamente a una playa paradisíaca.</p>
+                        <p>🍍 {{ __('messages.tropical_desc') }}</p>
+
+                    @elseif(str_contains(strtolower($producto->nombre), 'energético'))
+                        <p>⚡ {{ __('messages.energy_desc') }}</p>
+
+                    @elseif(str_contains(strtolower($producto->nombre), 'smoothie'))
+                        <p>🍓 {{ __('messages.smoothie_desc') }}</p>
+
+                    @elseif(str_contains(strtolower($producto->nombre), 'verde'))
+                        <p>🥦 {{ __('messages.green_desc') }}</p>
+
                     @else
                         <p>{{ $producto->descripcion }}</p>
                     @endif
 
                     <p><strong>{{ $producto->precio }} €</strong></p>
 
+                    <!-- CATEGORÍAS -->
+                    <div class="mb-2">
+
+                        @foreach($producto->categorias as $cat)
+
+                            <span class="badge bg-success">
+                                @if($cat->nombre == 'Frutas')
+                                    {{ __('messages.fruits') }}
+
+                                @elseif($cat->nombre == 'Detox')
+                                    {{ __('messages.detox') }}
+
+                                @elseif($cat->nombre == 'Tropical')
+                                    {{ __('messages.tropical') }}
+
+                                @elseif($cat->nombre == 'Smoothie')
+                                    {{ __('messages.smoothie') }}
+
+                                @elseif($cat->nombre == 'Saludable')
+                                    {{ __('messages.healthy') }}
+
+                                @elseif($cat->nombre == 'Energético')
+                                    {{ __('messages.energy') }}
+
+                                @elseif($cat->nombre == 'Vegetales')
+                                    {{ __('messages.vegetables') }}
+
+                                @else
+                                    {{ $cat->nombre }}
+                                @endif
+                            </span>
+
+                        @endforeach
+
+                    </div>
+
+                    @if(in_array($producto->id, $favoritos))
+
+                        <a href="/favorito/{{ $producto->id }}"
+                            class="btn btn-dark mb-2">
+
+                            ❤️ {{ __('messages.removefav') }}
+
+                        </a>
+
+                    @else
+
+                        <a href="/favorito/{{ $producto->id }}"
+                            class="btn btn-danger mb-2">
+
+                            🤍 {{ __('messages.addfav') }}
+
+                        </a>
+
+                    @endif
+
                     <a href="/comprar/{{ $producto->id }}" class="btn btn-comprar">
-                        Comprar
+                        {{ __('messages.buy') }}
                     </a>
 
                 </div>
@@ -172,7 +340,7 @@
 
 <!-- FOOTER -->
 <footer id="contacto">
-    <h5>Contacto</h5>
+    <h5>{{ __('messages.contact') }}</h5>
     <p>Email: frutifresh@gmail.com</p>
     <p>Teléfono: 123 456 789</p>
 </footer>
@@ -180,16 +348,8 @@
 <!-- SCRIPT -->
 <script>
     setTimeout(function() {
-        let mensaje = document.getElementById('mensaje');
-        if (mensaje) {
-            mensaje.style.display = 'none';
-        }
-    }, 3000);
-</script>
-
-<script>
-    setTimeout(function() {
         let mensajeError = document.getElementById('mensaje-error');
+
         if (mensajeError) {
             mensajeError.style.display = 'none';
         }
